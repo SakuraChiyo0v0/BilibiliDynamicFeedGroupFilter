@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name         B站动态分组过滤
-// @namespace    https://github.com/SakuraChiyo0v0
+// @namespace    https://github.com/chengdidididi
 // @version      1.0
 // @description  可以在渲染动态时筛选关注列表分组
-// @author       SakuraChiyo0v0
+// @author       chnaxoeng
 // @match        https://t.bilibili.com/*
 // @grant        unsafeWindow
 // @license      MIT
@@ -465,6 +465,54 @@
             if (targetElement && !document.querySelector('.custom-group-tabs-wrapper')) {
                 clearInterval(waitForTarget);
                 renderTabs(targetElement.parentNode, targetElement, tagsData);
+
+                // --- 监听"全部动态"是否激活，控制分组标签栏的显示/隐藏 ---
+                const upListContent = document.querySelector('.bili-dyn-up-list__content');
+                const customWrapper = document.querySelector('.custom-group-tabs-wrapper');
+
+                if (upListContent && customWrapper) {
+                    // 检查当前是否选中了"全部动态"
+                    function checkActiveState() {
+                        const firstItem = upListContent.querySelector('.bili-dyn-up-list__item');
+                        if (firstItem) {
+                            const isAllActive = firstItem.classList.contains('active');
+                            customWrapper.style.display = isAllActive ? 'flex' : 'none';
+                            // 如果切换到单个用户，关闭过滤
+                            if (!isAllActive && GLOBAL_STATE.isFiltering) {
+                                GLOBAL_STATE.isFiltering = false;
+                                GLOBAL_STATE.targetUids = [];
+                            }
+                        }
+                    }
+
+                    // 初始检查
+                    checkActiveState();
+
+                    // 使用 MutationObserver 监听 active 类的变化
+                    const classObserver = new MutationObserver((mutations) => {
+                        for (const mutation of mutations) {
+                            if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                                checkActiveState();
+                                break;
+                            }
+                        }
+                    });
+
+                    // 监听所有 item 的 class 变化
+                    function bindClassObserver() {
+                        upListContent.querySelectorAll('.bili-dyn-up-list__item').forEach(item => {
+                            classObserver.observe(item, { attributes: true, attributeFilter: ['class'] });
+                        });
+                    }
+                    bindClassObserver();
+
+                    // 监听 upListContent 的子节点变化（动态加载更多用户时）
+                    const listObserver = new MutationObserver(() => {
+                        bindClassObserver();
+                        checkActiveState();
+                    });
+                    listObserver.observe(upListContent, { childList: true });
+                }
             }
         }, 500);
     }
