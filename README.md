@@ -1,28 +1,55 @@
 # BilibiliDynamicFeedGroupFilter
-一个油猴脚本，支持按关注分组（标签）筛选 B 站动态流，让你在动态页只看特定分组的创作者更新。基于<a>https://github.com/chengdidididi/bilibili-timeline-filter-tab<a>进行修改
+
+一个油猴脚本，支持按关注分组（标签）筛选 B 站动态流，让你在动态页只看特定分组的创作者更新。
 
 ## 功能支持
-- **通过关注分组过滤动态** 可以依照你已经分类好的关注，筛选并渲染动态页面
-- **在分组的基础上兼容b站原本的视频、动态、文档分类** 因为使用的是劫持动态流的实现方法，因此可以直接兼容
-- 
+
+- **通过关注分组过滤动态** – 可以依照你已经分类好的关注分组，筛选并渲染动态页面。
+- **兼容B站原生分类** – 在分组的基础上兼容B站原本的视频、动态、文档分类。因为使用的是劫持动态流的实现方法，因此可以直接兼容。
+- **智能显示/隐藏** – 分组标签栏仅在"全部动态"激活时显示，切换到单个用户时自动隐藏，避免不必要的干扰。
+- **自动翻页** – 当前页没有匹配内容时，脚本会自动请求后续分页，直到找到内容或达到重试上限。
+- **熔断机制** – 连续多次空响应后自动停止请求，避免死循环。
+- **自适应滚动** – 分组数量较多时自动显示左右箭头按钮，内容不超出时按钮隐藏，保持界面简洁。
+
 ## 功能演示
-<img width="1115" height="253" alt="image" src="https://github.com/user-attachments/assets/44d5000d-72b6-4cfd-a26c-5cc93255e5e0" />
 
-## 使用
+![功能演示](image)
+
+## 安装步骤
+
 ### 第一步：安装脚本管理器
-本脚本需要配合浏览器扩展 **Tampermonkey (油猴)** 使用。如果你尚未安装，请根据你的浏览器点击下方链接安装：
 
-- [Chrome / Edge 版本](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo)
-- [Firefox 版本](https://addons.mozilla.org/zh-CN/firefox/addon/tampermonkey/)
+本脚本需要配合浏览器扩展 Tampermonkey (油猴) 使用。如果你尚未安装，请根据你的浏览器点击下方链接安装：
+
+- [Chrome / Edge 版本](https://www.tampermonkey.net/)
+- [Firefox 版本](https://addons.mozilla.org/firefox/addon/tampermonkey/)
 - [Safari 版本 (Userscripts)](https://apps.apple.com/app/userscripts/id1463298887)
 
 ### 第二步：安装脚本
-确保第一步完成后，复制脚本代码添加到油猴中即可
 
----
+1. 确保第一步完成后，点击本仓库中的脚本文件（`bilibili-group-filter.user.js`），或复制其原始内容。
+2. 脚本管理器会自动弹出安装提示，确认安装即可。
 
-### 使用说明
+## 使用说明
+
 1. 脚本安装完成后，打开 [Bilibili 动态首页](https://t.bilibili.com/)。
-2. 等待页面加载，你会发现在原本的标签栏上方出现了一个**新的横向分组栏**。
-3. 点击任意分组（如“特别关注”），列表将自动刷新并只显示该分组下的动态。
-4. 再次点击“全部动态”可恢复默认状态。
+2. 等待页面加载，你会发现在原本的标签栏上方出现了一个新的横向分组栏。
+3. 点击任意分组（如"特别关注"），列表将自动刷新并只显示该分组下的动态。
+4. 再次点击"全部动态"可恢复默认状态。
+5. 点击原生关注列表中的单个用户时，分组标签栏会自动隐藏；点击"全部动态"后重新显示。
+6. 若分组数量较多，标签栏两侧会出现箭头按钮，点击或使用鼠标滚轮即可左右滚动。
+
+## 注意事项
+
+- 脚本仅在 `https://t.bilibili.com/*` 域名下生效。
+- 需要登录 B 站才能获取关注分组数据。
+- 筛选模式下，脚本会连续请求多页动态直到找到匹配内容，网络波动时可能有短暂延迟。
+- 若 B 站更新页面结构导致标签栏无法正常插入，请提交 Issue 反馈。
+
+## 开源协议
+
+[MIT License](LICENSE)
+
+## 致谢
+
+本项目基于 [chengdidididi/bilibili-timeline-filter-tab](https://github.com/chengdidididi/bilibili-timeline-filter-tab) 进行二次开发，感谢原作者的贡献。
