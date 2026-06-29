@@ -12,8 +12,7 @@
 - **自适应滚动** – 分组数量较多时自动显示左右箭头按钮，内容不超出时按钮隐藏，保持界面简洁。
 
 ## 功能演示
-
-![功能演示](image)
+<img width="400" height="225" alt="Video Project 1" src="https://github.com/user-attachments/assets/d9d50d61-6701-40f2-9dc3-50fcb08b0abe" />
 
 ## 安装步骤
 
