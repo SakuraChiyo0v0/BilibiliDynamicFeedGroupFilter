@@ -17,11 +17,7 @@
 - [Safari 版本 (Userscripts)](https://apps.apple.com/app/userscripts/id1463298887)
 
 ### 第二步：安装脚本
-确保第一步完成后，点击下方的安装链接即可：
-
-**[点击此处安装B站动态分组过滤](https://greasyfork.org/zh-CN/scripts/558232-b%E7%AB%99%E5%8A%A8%E6%80%81%E5%88%86%E7%BB%84%E8%BF%87%E6%BB%A4)**
-
-> **提示**：点击后会跳转到 Tampermonkey 的安装页面，点击页面上的 **“安装”** 或 **“Install”** 按钮即可。
+确保第一步完成后，复制脚本代码添加到油猴中即可
 
 ---
 
